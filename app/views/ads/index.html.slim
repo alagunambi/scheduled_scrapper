@@ -1,0 +1,32 @@
+h1
+  Gathered Ads (#{@ads.count})
+  = link_to "Download as CSV", "/ads.csv?tag=#{params[:tag_id]}", :class => "pull-right btn btn-success white", :id => "download-button"
+
+- if @ads.count < 1
+  center
+    h3 "No Ads, probably scrapping yet to start, please visit later."
+- else
+  div.table-responsive
+    table.table.table-bordered.table-striped
+      thead
+        tr
+          / th ID
+          th Title
+          th Contact
+          th Description
+          th User
+          / th Tag
+          th Created At
+          / th Link
+
+      tbody
+        - @ads.each do |ad|
+          tr
+            / td = ad.ad_id
+            td = ad.title
+            td = ad.contact
+            td = ad.description
+            td = ad.user
+            / td = ad.tag_id
+            td = ad.created_at
+            / td = ad.link

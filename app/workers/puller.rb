@@ -1,9 +1,21 @@
-require 'tor-privoxy'
+class Puller
+  include Sidekiq::Worker
+  sidekiq_options unique: true,
+                  unique_args: ->(args) { [ args.first ] }
 
-class ApplicationController < ActionController::Base
-  # Prevent CSRF attacks by raising an exception.
-  # For APIs, you may want to use :null_session instead.
-  protect_from_forgery with: :exception
+
+  def perform(*args)
+    logger.info args.first["schedule"]
+    logger.info "Arguments visible or not?"
+    schedule = Schedule.find(args.first["schedule"])
+    @ads = from_haraj(schedule)
+    if @ads.count > 1
+      schedule.status = 1
+    else
+      schedule.status = 2
+    end
+    schedule.save!
+  end
 
   def from_haraj(schedule)
     begin
@@ -61,43 +73,49 @@ class ApplicationController < ActionController::Base
 
     Ad.where(:tag_id => tag.id)
   end
-end
 
-def iterate_ads(agent, ads_list, tag)
-#  key = Base64.strict_encode64(url)
-  ads_list.each_with_index do |item, i|
-    begin
-      link = item.search("a").attr("href")
-      logger.info link
-      ad_page = agent.get(link)
 
-      ad = Ad.new
+  def iterate_ads(agent, ads_list, tag)
+  #  key = Base64.strict_encode64(url)
+    ads_list.each_with_index do |item, i|
+      begin
+        if ad = Ad.find_by(:ad_id => item.search("td")[0].text.squish)
+          logger.info ad.inspect
+        else
+          link = item.search("a").attr("href")
+          logger.info link
+          ad_page = agent.get(link)
 
-      ad.link = link
-      ad.ad_id = item.search("td")[0].text
-      ad.title = ad_page.search("h3").text
-      ad.user = ad_page.search("a.username").text
-      ad.description = ad_page.search("div.ads_body").text
-      ad.contact = ad_page.search("div.contact").search("a").text
-      ad.tag_id = tag.id
+          ad = Ad.new
 
-      logger.info ad.inspect
+          ad.link = link
+          ad.ad_id = item.search("td")[0].text.squish
+          ad.title = ad_page.search("h3").text.squish
+          ad.user = ad_page.search("a.username").text.squish
+          ad.description = ad_page.search("div.ads_body").text.squish
+          ad.contact = ad_page.search("div.contact").search("a").text.squish
+          ad.tag_id = tag.id
 
-      ad.save!
-    rescue => e
-      puts e
-      puts e.backtrace
+          logger.info ad.inspect
+
+          ad.save!
+        end
+      rescue => e
+        puts e
+        puts e.backtrace
+      end
     end
   end
-end
 
-def generate_cron(schedule)
-  d = schedule.date.to_date
-  if d > Date.today
-    cron = "00 09 #{Date.today.day}-#{d.day} #{Date.today.month}-#{d.month} *"
-  else
-    cron = "00 09 #{d.day} #{d.month} *"
+  def generate_cron(schedule)
+    d = schedule.date.to_date
+    if d > Date.today
+      cron = "00 09 #{Date.today.day}-#{d.day} #{Date.today.month}-#{d.month} *"
+    else
+      cron = "00 09 #{d.day} #{d.month} *"
+    end
+    puts cron
+    cron
   end
-  puts cron
-  cron
+
 end

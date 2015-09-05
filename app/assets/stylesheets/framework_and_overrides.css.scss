@@ -8,9 +8,6 @@ img {
   margin: 0 auto;
   }
 // override for the 'Home' navigation link
-.navbar-brand {
-  font-size: inherit;
-  }
 
 // THESE ARE EXAMPLES YOU CAN MODIFY
 // create your own classes
@@ -35,7 +32,7 @@ img {
 // to make views framework-neutral
 main {
   @extend .container;
-  background-color: #eee;
+  background-color: white;
   padding-bottom: 80px;
   width: 100%;
   margin-top: 51px; // accommodate the navbar
@@ -44,3 +41,17 @@ section {
   @extend .row;
   margin-top: 20px;
   }
+
+.navbar-inverse {
+  background-color: #2C8A2D;
+  border-color: #2C8A2D;
+}
+.navbar-inverse a{
+  color: white;
+}
+.navbar-inverse .navbar-brand, .navbar-inverse .navbar-nav > li > a {
+  color: white;
+}
+.navbar-inverse .navbar-brand:hover, .navbar-inverse .navbar-brand:focus, .navbar-inverse .navbar-nav > li > a:hover, .navbar-inverse .navbar-nav > li > a:focus {
+  background-color: #2CAD37;
+}

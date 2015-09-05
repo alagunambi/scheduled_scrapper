@@ -1,0 +1,15 @@
+p#notice = notice
+
+p
+  strong Tag:
+  = @schedule.tag_id
+p
+  strong Date:
+  = @schedule.date
+p
+  strong Status:
+  = @schedule.status
+
+= link_to 'Edit', edit_schedule_path(@schedule)
+'|
+= link_to 'Back', schedules_path

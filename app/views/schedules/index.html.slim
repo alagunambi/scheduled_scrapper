@@ -1,0 +1,22 @@
+h1 Schedules
+
+
+div.table-responsive
+  table.table.table-bordered.table-striped
+    thead
+      tr
+        th Tag
+        th Date
+        th Status
+        th Last Updated
+
+    tbody
+      - @schedules.each do |schedule|
+        tr
+          td
+            = link_to schedule.tag.title, ads_path(:tag_id => schedule.tag_id)
+          td = schedule.date
+          td = schedule.status
+          td = schedule.updated_at
+
+br

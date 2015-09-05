@@ -1,0 +1,21 @@
+p#notice = notice
+
+p
+  strong Title:
+  = @ad.title
+p
+  strong Contact:
+  = @ad.contact
+p
+  strong Description:
+  = @ad.description
+p
+  strong User:
+  = @ad.user
+p
+  strong Tag:
+  = @ad.tag_id
+
+= link_to 'Edit', edit_ad_path(@ad)
+'|
+= link_to 'Back', ads_path

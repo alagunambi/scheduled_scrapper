@@ -1,0 +1,21 @@
+h1 Listing tags
+
+table
+  thead
+    tr
+      th Title
+      th
+      th
+      th
+
+  tbody
+    - @tags.each do |tag|
+      tr
+        td = tag.title
+        td = link_to 'Show', tag
+        td = link_to 'Edit', edit_tag_path(tag)
+        td = link_to 'Destroy', tag, data: {:confirm => 'Are you sure?'}, :method => :delete
+
+br
+
+= link_to 'New Tag', new_tag_path

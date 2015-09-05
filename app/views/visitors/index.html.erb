@@ -1,1 +1,40 @@
-<h3>Welcome</h3>
+<br>
+<br>
+
+<div class="panel panel-success">
+  <div class="panel-heading">
+    <h4> Schedule Ads scrapping of a link till any future date. </h4>
+  </div>
+  <div class="panel-body">
+    <%= form_for "schedule", url: "/schedule", html: {class: "form-inline"} do |f| %>
+      <div class='col-sm-6'>
+        <div class="input-group">
+          <span class="input-group-addon" id="basic-addon1">http://haraj.com.sa/tags/</span>
+          <input type="text" name="schedule[tag_title]" class="form-control" placeholder="tag" aria-describedby="basic-addon1" required>
+        </div>
+      </div>
+      <div class='col-sm-3'>
+        <div class="form-group">
+          <div class='input-group date' id='datetimepicker1'>
+                <input type='text' class="form-control" name="schedule[date]" date-formate="MM/DD/YYYY" required/>
+            <span class="input-group-addon">
+              <span class="glyphicon glyphicon-calendar"></span>
+            </span>
+          </div>
+        </div>
+      </div>
+      <script type="text/javascript">
+          $(function () {
+              $('#datetimepicker1').datetimepicker({
+                format: "D/MM/YYYY"
+
+                }
+              );
+          });
+      </script>
+      <div class="col-sm-3">
+        <%= f.submit 'Schedule it!', :class => "btn btn-primary" %>
+      </div>
+    <% end %>
+  </div>
+</div>
