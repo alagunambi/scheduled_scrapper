@@ -43,6 +43,9 @@ gem 'tor-privoxy'
 gem 'mechanize'
 gem 'sidekiq-unique-jobs'
 
+gem 'execjs'
+
 group :production do
   gem 'mysql2'
+  gem 'thin'
 end
