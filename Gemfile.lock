@@ -161,6 +161,7 @@ GEM
     momentjs-rails (2.10.3)
       railties (>= 3.1)
     multi_json (1.11.2)
+    mysql2 (0.3.16)
     nenv (0.2.0)
     net-http-digest_auth (1.4)
     net-http-persistent (2.9.4)
@@ -304,6 +305,7 @@ DEPENDENCIES
   jquery-rails
   mechanize
   momentjs-rails (>= 2.9.0)
+  mysql2
   quiet_assets
   rails (= 4.2.2)
   rails_layout

@@ -1,7 +1,7 @@
 source 'https://rubygems.org'
 ruby '2.0.0'
 gem 'rails', '4.2.2'
-gem 'sqlite3'
+
 gem 'sass-rails', '~> 5.0'
 gem 'uglifier', '>= 1.3.0'
 gem 'coffee-rails', '~> 4.1.0'
@@ -29,6 +29,7 @@ group :development do
   gem 'hub', :require=>nil
   gem 'quiet_assets'
   gem 'rails_layout'
+  gem 'sqlite3'
 end
 
 gem 'sinatra'
@@ -41,3 +42,7 @@ gem 'bootstrap3-datetimepicker-rails', '~> 4.14.30'
 gem 'tor-privoxy'
 gem 'mechanize'
 gem 'sidekiq-unique-jobs'
+
+group :production do
+  gem 'mysql2'
+end
