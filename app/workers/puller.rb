@@ -92,9 +92,9 @@ class Puller
           ad.link = link
           ad.ad_id = item.search("td")[0].text.squish
           ad.title = ad_page.search("h3").text.squish
-          ad.user = ad_page.search("a.username").text.squish
+          ad.user = ad_page.search("a.username")[0].text.squish
           ad.description = ad_page.search("div.ads_body").text.squish
-          ad.contact = ad_page.search("div.contact").search("a").text.squish
+          ad.contact = ad_page.search("div.contact").search("a").text.squish.delete("^0-9")
           ad.tag_id = tag.id
 
           logger.info ad.inspect

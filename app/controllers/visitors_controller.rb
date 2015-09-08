@@ -13,7 +13,7 @@ class VisitorsController < ApplicationController
 
     respond_to do |format|
       if @job
-        format.html { redirect_to schedules_path, notice: 'Scheduled Ads gathering will start at 9AM.' }
+        format.html { redirect_to schedules_path, notice: 'Scheduled Ads gathering started now, next will start at 9AM.' }
       else
         format.html { redirect_to :back, notice: 'Failed to schedule, please try again.' }
       end

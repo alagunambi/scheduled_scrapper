@@ -10,7 +10,7 @@ h1
     table.table.table-bordered.table-striped
       thead
         tr
-          / th ID
+          th ID
           th Title
           th Contact
           th Description
@@ -22,7 +22,8 @@ h1
       tbody
         - @ads.each do |ad|
           tr
-            / td = ad.ad_id
+            td
+              = link_to ad.ad_id, ad.link
             td = ad.title
             td = ad.contact
             td = ad.description
