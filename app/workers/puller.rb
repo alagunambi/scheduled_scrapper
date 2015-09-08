@@ -18,31 +18,32 @@ class Puller
   end
 
   def from_haraj(schedule)
+    url = URI.encode(schedule.tag.title.to_s)
+
+    tag = schedule.tag
+
+    agent = Mechanize.new
+
+    agent = TorPrivoxy::Agent.new '127.0.0.1', '', {8118 => 9051} do |agent|
+     sleep 1
+    #  logger.debug "New IP is #{agent.ip}------------------------------------------------===================================================="
+    #  logger.info "New IP is #{agent.ip}------------------------------------------------===================================================="
+    end
+
+    agent.user_agent_alias = Ad.random_desktop_user_agent
+
+    #page = agent.get('http://www.amazon.in/s/ref=nb_sb_noss_1/278-0803572-2415314?url=search-alias%3Daps&field-keywords=royal+canin')
+    #page = agent.get('http://www.amazon.in/s/ref=nb_sb_noss_2/277-7862435-2981953?url=search-alias%3Daps&field-keywords=bajaj&rh=i%3Aaps%2Ck%3Abajaj')
+
+    hostname = URI.parse(url).host
+
+    #key = Base64.strict_encode64(url)
+
+    #Ads.where(:source => key).destroy_all
+
+    page = agent.get(url)
+
     begin
-      url = URI.encode("http://haraj.com.sa/tags/" + schedule.tag.title.to_s)
-
-      tag = Tag.find_by(:title => schedule.tag.title.to_s)
-
-      agent = Mechanize.new
-
-      agent = TorPrivoxy::Agent.new '127.0.0.1', '', {8118 => 9051} do |agent|
-       sleep 1
-      #  logger.debug "New IP is #{agent.ip}------------------------------------------------===================================================="
-      #  logger.info "New IP is #{agent.ip}------------------------------------------------===================================================="
-      end
-
-      agent.user_agent_alias = Ad.random_desktop_user_agent
-
-      #page = agent.get('http://www.amazon.in/s/ref=nb_sb_noss_1/278-0803572-2415314?url=search-alias%3Daps&field-keywords=royal+canin')
-      #page = agent.get('http://www.amazon.in/s/ref=nb_sb_noss_2/277-7862435-2981953?url=search-alias%3Daps&field-keywords=bajaj&rh=i%3Aaps%2Ck%3Abajaj')
-
-      hostname = URI.parse(url).host
-
-      #key = Base64.strict_encode64(url)
-
-      #Ads.where(:source => key).destroy_all
-
-      page = agent.get(url)
     #  logger.info "New IP is #{agent.ip}------------------------------------------------===================================================="
 
       iterate_ads(agent, page.search("table.tableAds tr"), tag)
@@ -101,8 +102,10 @@ class Puller
           ad.save!
         end
       rescue => e
+        puts "SSSSSTTTTTTTAAAAAAAAARRRRRRRRRRRTTTTTTTTTTTTTTTTTTTTTTTTT"
         puts e
         puts e.backtrace
+        puts "EEEEEEEEEEEEEEEENNNNNNNNNNNNNNNNNNNNDDDDDDDDDDDDDDDDDDDDD"
       end
     end
   end
@@ -117,5 +120,4 @@ class Puller
     puts cron
     cron
   end
-
 end
