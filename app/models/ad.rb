@@ -4,7 +4,7 @@ class Ad < ActiveRecord::Base
   def self.as_csv
     col_names = 'ad_id,title,description,user,contact,link'
     col_names = col_names.split(",") if  col_names.is_a?(String)
-    CSV.generate(:col_sep => ";") do |csv|
+    CSV.generate(:col_sep => ",") do |csv|
       csv << col_names
       all.each do |item|
         csv << col_names.collect{|name| item.send(name).squish()}
