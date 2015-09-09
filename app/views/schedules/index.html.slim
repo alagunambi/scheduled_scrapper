@@ -14,7 +14,7 @@ div.table-responsive
       - @schedules.each do |schedule|
         tr
           td
-            = link_to schedule.tag.title, ads_path(:tag_id => schedule.tag_id)
+            = link_to URI::decode(schedule.tag.title), ads_path(:tag_id => schedule.tag_id)
           td = schedule.date
           td = schedule.status
           td = schedule.updated_at

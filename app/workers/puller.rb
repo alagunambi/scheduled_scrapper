@@ -3,7 +3,6 @@ class Puller
   sidekiq_options unique: true,
                   unique_args: ->(args) { [ args.first ] }
 
-
   def perform(*args)
     logger.info args.first["schedule"]
     logger.info "Arguments visible or not?"
