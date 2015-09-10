@@ -44,6 +44,7 @@ gem 'mechanize'
 gem 'sidekiq-unique-jobs'
 
 gem 'execjs'
+gem 'devise'
 
 group :production do
   gem 'mysql2'

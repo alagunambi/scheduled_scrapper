@@ -2,9 +2,18 @@
 <!-- <li role="presentation">
   <%= link_to 'Ads', ads_path %>
 </li> -->
-<li role="presentation">
-  <%= link_to 'Schedules', schedules_path %>
-</li>
-<li role="presentation">
-  <%= link_to 'Monitoring', sidekiq_web_path, :target => "_blank" %>
-</li>
+<% if admin_signed_in? %>
+  <li role="presentation">
+    <%= link_to 'Schedules', schedules_path %>
+  </li>
+  <li role="presentation">
+    <%= link_to 'Monitoring', sidekiq_web_path, :target => "_blank" %>
+  </li>
+  <li role="presentation pull-right">
+      <%= link_to "Logout", destroy_admin_session_path, :method => :delete %>
+  </li>
+<% else %>
+  <li role="presentation pull-right">
+    <%= link_to "Login", new_admin_session_path %>
+  </li>
+<% end %>
